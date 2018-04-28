@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <div class="failure">
+        <h1 style="text-align: center">
+            {{ response.message }}
+            <a href="{{ path('landing_page') }}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </h1>
+        <img src="{{ asset('assets/images/'~response.code~'.png') }}" class="error-image">
+    </div>
+{% endblock %}

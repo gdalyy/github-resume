@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+
+    <img src="{{ asset('assets/images/exozet-logo.png') }}" class="exozet-logo">
+    {{ form_start(form,{'attr':{'class':'form-wrapper cf'}}) }}
+    {{ form_widget(form.username,{'attr':{'placeholder':'Enter your GitHub username and click on Generate'}}) }}
+        <button type="submit">Generate</button>
+    {{ form_end(form) }}
+    <div class="byline"><p>Brought to you by the brilliant mind of <a
+                    href="https://www.linkedin.com/in/ghaith-daly-352006152">Ghaith Daly</a>
+    </div>
+
+{% endblock %}

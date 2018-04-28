@@ -1,0 +1,121 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="title">
+            <a href="https://github.com/{{ user.login }}"> {{ user.login }} </a> GITHUB RÉSUMÉ
+            <div class="pull-right"><a href="{{ path('landing_page') }}" data-toggle="tooltip"
+                                       title="See other user GitHub profile"><i class="fa fa-search"
+                                                                                aria-hidden="true"></i></a></div>
+        </div>
+        <div class="content">
+            <div class="block">
+                <div class="header">Overview</div>
+                <div class="body-overview">
+                    <div class="pull-left">
+                        {% if user.avatar_url %}<img src="{{ user.avatar_url }}" class="avatar">{% endif %}
+                    </div>
+                    <div class="pull-left info">
+                        <ul>
+
+                            <li>
+                                <span>Name :</span>
+                                {% if user.name %}
+                                    {{ user.name }}
+                                {% else %}
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                {% endif %}
+                            </li>
+                            <li>
+                                <span>Location :</span>
+                                {% if user.location %}
+                                    {{ user.location }}
+                                {% else %}
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                {% endif %}
+                            </li>
+                            <li>
+                                <span>Blog :</span>
+                                {% if user.blog %}
+                                    <a target="_blank" href="{{ user.blog }}"> {{ user.blog }}</a>
+                                {% else %}
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                {% endif %}
+                            </li>
+                            <li><span>Public repositories :</span>
+                                {% if user.login %}
+                                    <a target="_blank" href="https://github.com/{{ user.login }}?tab=repositories">
+                                        {{ user.public_repos }}
+                                    </a>
+                                {% else %}
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                {% endif %}
+
+                            </li>
+                            <li><span>Followers :</span>
+                                {% if user.followers %}
+                                    <a target="_blank" href="https://github.com/{{ user.login }}?tab=followers">
+                                        {{ user.followers }}
+                                    </a>
+                                {% else %}
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                {% endif %}
+                            </li>
+                            <li><span>On GitHub since :</span> {{ user.created_at|date('Y') }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% if repos|length %}
+                <div class="block">
+                    <div class="header">Languages</div>
+                    <div class="body-languages">
+                        <ul>
+                            {% for key,language in languages %}
+                                {% if language.lines %}
+                                    <li>
+                                        <a href="https://github.com/search?q=user%3A{{ user.login }}&l={{ key }}">
+                                            {{ key }}
+                                        </a>
+                                        ({{ language.percentage }}%)
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="block last">
+                <div class="header">Repositories</div>
+                <div class="body-repository">
+                    {% if not repos|length %}
+                        <div class="empty"> {{ user.login }} doesn’t have any public repositories yet.</div>
+                    {% else %}
+                        {% for repo in repos %}
+                            <div class="repo {% if loop.last %} last {% endif %}">
+                                <div class="name">
+                                    <a href="{{ repo.html_url }}">{{ repo.name }}</a>
+                                    {#<small>{{ repo.owner.login }}</small>#}
+                                    <h4 class="date">{{ repo.created_at|date('Y') }}
+                                        - {{ repo.updated_at|date('Y') }}</h4>
+                                </div>
+                                <div class="description">{{ repo.description|capitalize }} <a
+                                            href="{{ repo.html_url }}"> {{ repo.html_url }}</a>
+                                </div>
+                                <div class="more">
+                                    This repository has {{ repo.stargazers_count }} stars and {{ repo.forks }} forks. If
+                                    you would like more information about this
+                                    repository and my contributed code, please visit the <a href="{{ repo.html_url }}">repo</a>
+                                    on GitHub.
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        Created by <a href="https://www.linkedin.com/in/ghaith-daly-352006152/"> Ghaith Daly </a> - Web developer @
+        DOTIT
+    </div>
+{% endblock %}

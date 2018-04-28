@@ -1,0 +1,4 @@
+exozet_challenge:
+    resource: "@ExozetChallengeBundle/Controller/"
+    type:     annotation
+    prefix:   /
