@@ -77,10 +77,11 @@ class GitHubResumeController extends Controller
             // constructing languages array
             foreach ($responseRepos as $repo) {
                 $responseLanguages = $gs->getRepoMainLanguage($repo->languages_url);
+
                 if (array_key_exists($repo->language, $languages))
-                    $languages[key($responseLanguages)]['lines'] += current($responseLanguages);
+                    $languages[$repo->language]['lines'] += current($responseLanguages);
                 else
-                    $languages[key($responseLanguages)]['lines'] = current($responseLanguages);
+                    $languages[$repo->language]['lines'] = current($responseLanguages);
 
                 // accumulating programming languages lines
                 $lines += current($responseLanguages);
